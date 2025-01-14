@@ -3,7 +3,7 @@ package ru.ftptpf.model;
 import static ru.ftptpf.model.ProductType.*;
 
 /**
- * Класс для создания продуктов
+ * Создание продуктов
  */
 public final class ProductFactory {
 

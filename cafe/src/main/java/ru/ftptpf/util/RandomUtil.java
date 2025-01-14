@@ -3,7 +3,7 @@ package ru.ftptpf.util;
 import java.util.Random;
 
 /**
- * Класс для генерации случайных чисел от нуля до переданного числа
+ * Генерации случайных чисел от нуля до переданного числа
  */
 public final class RandomUtil {
 

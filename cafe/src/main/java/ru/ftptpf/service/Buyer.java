@@ -15,7 +15,7 @@ import static ru.ftptpf.util.CafeConst.BUYER_WAIT_TIME;
 import static ru.ftptpf.util.CafeConst.MAX_PRODUCT_COUNT;
 
 /**
- * Сервис покупок
+ * Сервис покупателя
  */
 public class Buyer implements Runnable {
 
