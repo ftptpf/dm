@@ -1,12 +1,12 @@
 package ru.ftptpf.service;
 
 import ru.ftptpf.model.Order;
+import ru.ftptpf.util.CafeConst;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
-import static ru.ftptpf.util.CafeConst.PRODUCT_TIME_COST;
 
 /**
  * Сервис работы кассы
@@ -15,7 +15,7 @@ public class Cashbox implements Runnable {
 
     private static int igGenerator = 1;
 
-    private final int id;
+    private final Integer id;
     private final List<Order> orders = new ArrayList<>();
     private final BlockingQueue<Order> allOrders;
 
@@ -30,15 +30,15 @@ public class Cashbox implements Runnable {
         while (true) {
             try {
                 Order order = allOrders.take();
-                Thread.sleep(order.products().size() * PRODUCT_TIME_COST * 1000L);
+                Thread.sleep(order.products().size() * CafeConst.PRODUCT_TIME_COST * 1000L);
                 orders.add(order);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
