@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>cafe</module>
-        <module>level_1</module>
+        <module>level2</module>
     </modules>
 
     <properties>

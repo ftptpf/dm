@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>level_1</artifactId>
+    <artifactId>level2</artifactId>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
