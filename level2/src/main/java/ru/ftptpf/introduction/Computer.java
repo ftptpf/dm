@@ -2,10 +2,10 @@ package ru.ftptpf.introduction;
 
 public class Computer {
 
-    int ssd = 500;
-    int ram = 1024;
+    private int ssd = 500;
+    private int ram = 1024;
 
-    Computer() {
+    public Computer() {
         System.out.println("Я был создан");
     }
 
