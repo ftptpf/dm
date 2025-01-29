@@ -12,14 +12,19 @@ package ru.ftptpf.introduction.practice;
 public class TimeIntervalRunner {
 
     public static void main(String[] args) {
-        TimeInterval timeInterval = new TimeInterval(30, 2, 0);
-        System.out.println(timeInterval.totalSeconds());
+        TimeInterval timeInterval = createTimeINterval();
 
         TimeInterval timeInterval2 = new TimeInterval(timeInterval.totalSeconds());
         System.out.println(timeInterval2.totalSeconds());
         timeInterval2.print();
 
         timeInterval.sum(timeInterval2).print();
+    }
+
+    private static TimeInterval createTimeINterval() {
+        TimeInterval timeInterval = new TimeInterval(30, 2, 0);
+        System.out.println(timeInterval.totalSeconds());
+        return timeInterval;
     }
 
 }
