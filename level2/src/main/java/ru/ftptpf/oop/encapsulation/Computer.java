@@ -1,6 +1,8 @@
 package ru.ftptpf.oop.encapsulation;
 
-public class Computer {
+import ru.ftptpf.oop.polymorphism.Printable;
+
+public class Computer implements Printable {
 
     private Ram ram;
     private Ssd ssd;
@@ -20,5 +22,10 @@ public class Computer {
 
     public void load() {
         System.out.println("Я загрузился");
+    }
+
+    @Override
+    public void print() {
+        System.out.println("Print");
     }
 }
