@@ -1,20 +1,26 @@
 package ru.ftptpf.generic;
 
-public class List {
+/**
+ * Класс List
+ * T - тип который мы задаем при создании объекта
+ *
+ * @param <T>
+ */
+public class List<T> {
 
-    private Object[] objects;
+    private T[] objects;
     private int size;
 
     public List(int initialSize) {
-        this.objects = new Object[initialSize];
+        this.objects = (T[]) new Object[initialSize];
     }
 
-    public void add(Object object) {
-        objects[size] = object;
+    public void add(T element) {
+        objects[size] = element;
         size++;
     }
 
-    public Object get(int index) {
+    public T get(int index) {
         return objects[index];
     }
 
