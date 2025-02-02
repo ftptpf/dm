@@ -1,6 +1,8 @@
 package ru.ftptpf.oop.practice;
 
-public class Archer extends Hero {
+import ru.ftptpf.generic.weapon.RangeWeapon;
+
+public class Archer<T extends RangeWeapon> extends Hero<T> {
 
     private Wolf wolf;
 

@@ -1,6 +1,8 @@
 package ru.ftptpf.oop.practice;
 
-public class Warrior extends Hero {
+import ru.ftptpf.generic.weapon.MeleeWeapon;
+
+public class Warrior<T extends MeleeWeapon> extends Hero<T> {
 
     public Warrior(String name, int damage) {
         super(name, damage);
