@@ -2,7 +2,7 @@ package ru.ftptpf.collections.equals;
 
 import java.util.Objects;
 
-public class Person {
+public class Person implements Comparable<Person> {
 
     private int id;
     private String firstName;
@@ -61,5 +61,10 @@ public class Person {
                 + ", firstName='" + firstName + '\''
                 + ", lastName='" + lastName + '\''
                 + '}';
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return Integer.compare(this.id, o.id);
     }
 }
