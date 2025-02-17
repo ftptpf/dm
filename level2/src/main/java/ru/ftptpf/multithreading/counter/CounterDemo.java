@@ -1,4 +1,4 @@
-package ru.ftptpf.multithreading.atomicity;
+package ru.ftptpf.multithreading.counter;
 
 /**
  * В методе main создать 4 потока типа CounterThread,

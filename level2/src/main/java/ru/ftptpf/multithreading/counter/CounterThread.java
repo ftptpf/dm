@@ -1,4 +1,4 @@
-package ru.ftptpf.multithreading.atomicity;
+package ru.ftptpf.multithreading.counter;
 
 /**
  * Создать класс CounterThread с одним полем и конструктором для инициализации:
@@ -15,7 +15,7 @@ public class CounterThread extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 1000; i++) {
             counter.increment();
         }
     }
