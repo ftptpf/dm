@@ -12,18 +12,35 @@ public class BuyerThread implements Runnable {
 
     @Override
     public void run() {
+        /**
+         * в блоке synchronized (cashboxes) мы захватываем монитор
+         */
         try {
-            while (true) {
-                if (!cashboxes.isEmpty()) {
-                    Cashbox cashbox = cashboxes.remove();
-                    System.out.println(Thread.currentThread().getName() + " обслуживается в кассе " + cashbox);
-                    Thread.sleep(5L);
-                    System.out.println(Thread.currentThread().getName() + " освобождаю кассу " + cashbox);
-                    cashboxes.add(cashbox);
-                    break;
-                } else {
-                    System.out.println(Thread.currentThread().getName() + " ожидает свободную кассу ");
-                    Thread.sleep(5L);
+            synchronized (cashboxes) {
+                while (true) {
+                    if (!cashboxes.isEmpty()) {
+                        Cashbox cashbox = cashboxes.remove();
+                        System.out.println(Thread.currentThread().getName() + " обслуживается в кассе " + cashbox);
+
+                        /**
+                         * после wait мы освобождаем монитор на 3 миллисекунд
+                         * и чтобы продолжить должны снова его захватить
+                         */
+                        cashboxes.wait(5L);
+
+                        System.out.println(Thread.currentThread().getName() + " освобождаю кассу " + cashbox);
+                        cashboxes.add(cashbox);
+                        /**
+                         * notifyAll пробуждает все потоки которые были в состоянии wait, и после того как освободится
+                         * монитор, один из других потоков сможет захватить его
+                         */
+                        cashboxes.notifyAll();
+                        break;
+
+                    } else {
+                        System.out.println(Thread.currentThread().getName() + " ожидает свободную кассу ");
+                        cashboxes.wait();
+                    }
                 }
             }
         } catch (InterruptedException e) {
