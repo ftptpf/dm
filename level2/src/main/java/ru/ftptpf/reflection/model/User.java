@@ -6,7 +6,7 @@ public class User extends Person implements Serializable, Comparable<User> {
 
     private String name;
 
-    public User(long id, String name) {
+    public User(Long id, String name) {
         super(id);
         this.name = name;
     }
@@ -28,6 +28,7 @@ public class User extends Person implements Serializable, Comparable<User> {
     public String toString() {
         return "User{"
                 + "name='" + name + '\''
-                + '}';
+                + '}'
+                + super.toString();
     }
 }
