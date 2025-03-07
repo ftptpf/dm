@@ -5,10 +5,13 @@ import java.io.Serializable;
 public class User extends Person implements Serializable, Comparable<User> {
 
     private String name;
+    @MinAge(age = 22)
+    private final Integer age;
 
-    public User(Long id, String name) {
+    public User(Long id, String name, Integer age) {
         super(id);
         this.name = name;
+        this.age = age;
     }
 
     @Override

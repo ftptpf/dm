@@ -5,7 +5,7 @@ import java.lang.reflect.*;
 public class ReflectionApiExample {
 
     public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        User user = new User(25L, "Ivan");
+        User user = new User(248L, "Ivan", 33);
 /*        Class<? extends User> userClass = user.getClass();
         Class<User> userClass1 = User.class;
         System.out.println(userClass == userClass1);*/
@@ -15,8 +15,8 @@ public class ReflectionApiExample {
     }
 
     private static void testConstructor() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Constructor<User> constructor = User.class.getConstructor(Long.class, String.class);
-        User petr = constructor.newInstance(5L, "Petr");
+        Constructor<User> constructor = User.class.getConstructor(Long.class, String.class, Integer.class);
+        User petr = constructor.newInstance(5L, "Petr", 23);
         System.out.println(petr);
     }
 
