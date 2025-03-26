@@ -13,13 +13,20 @@ public class JdbcRunner {
                 id SERIAL PRIMARY KEY,
                 date TEXT NOT NULL);
                 """;
+        String sqlInsert = """
+                INSERT INTO info (date)
+                VALUES ('test2'), ('test3');
+                """;
         try (Connection connection = ConnectionManager.open();
              Statement statement = connection.createStatement()) {
             System.out.println(connection.getTransactionIsolation());
             System.out.println(connection.getSchema());
+
             boolean executeResult = statement.execute(sql);
             System.out.println(executeResult);
 
+            int executeInsertResult = statement.executeUpdate(sqlInsert);
+            System.out.println("Количество вставленных строк: " + executeInsertResult);
         }
     }
 }
