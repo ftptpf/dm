@@ -36,6 +36,13 @@ public class JdbcRunner {
             while (resultSelect.next()) {
                 System.out.println(resultSelect.getInt("id") + " " + resultSelect.getString("date"));
             }
+
+            int executeResultInsert = statement.executeUpdate(sqlInsert, Statement.RETURN_GENERATED_KEYS);
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            while (generatedKeys.next()) {
+                int generatedId = generatedKeys.getInt("id");
+                System.out.println("Добавленная запись имеет id: " + generatedId);
+            }
         }
     }
 }
