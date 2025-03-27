@@ -3,6 +3,7 @@ package ru.ftptpf;
 import ru.ftptpf.util.ConnectionManager;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -17,6 +18,9 @@ public class JdbcRunner {
                 INSERT INTO info (date)
                 VALUES ('test2'), ('test3');
                 """;
+        String sqlSelect = """
+                SELECT * FROM info;
+                """;
         try (Connection connection = ConnectionManager.open();
              Statement statement = connection.createStatement()) {
             System.out.println(connection.getTransactionIsolation());
@@ -27,6 +31,11 @@ public class JdbcRunner {
 
             int executeInsertResult = statement.executeUpdate(sqlInsert);
             System.out.println("Количество вставленных строк: " + executeInsertResult);
+
+            ResultSet resultSelect = statement.executeQuery(sqlSelect);
+            while (resultSelect.next()) {
+                System.out.println(resultSelect.getInt("id") + " " + resultSelect.getString("date"));
+            }
         }
     }
 }
