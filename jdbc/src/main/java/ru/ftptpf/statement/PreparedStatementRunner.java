@@ -22,6 +22,11 @@ public class PreparedStatementRunner {
         ArrayList<Integer> result = new ArrayList<>();
         try (Connection connection = ConnectionManager.open();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setFetchSize(3);
+            preparedStatement.setQueryTimeout(10);
+            preparedStatement.setMaxRows(100);
+
             preparedStatement.setString(1, dataText);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
