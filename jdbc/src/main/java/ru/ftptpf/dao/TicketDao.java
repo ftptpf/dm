@@ -1,5 +1,6 @@
 package ru.ftptpf.dao;
 
+import ru.ftptpf.dto.TicketFilter;
 import ru.ftptpf.entity.Ticket;
 import ru.ftptpf.exeption.DaoException;
 import ru.ftptpf.util.ConnectionPoolManager;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
@@ -36,6 +38,41 @@ public class TicketDao {
             """;
 
     private TicketDao() {
+    }
+
+    public List<Ticket> findAll(TicketFilter filter) {
+        List<Object> parameters = new ArrayList<>();
+        List<String> whereSql = new ArrayList<>();
+        if (filter.seatNo() != null) {
+            whereSql.add("siat_no LIKE ?");
+            parameters.add("%" + filter.seatNo() + "%");
+        }
+        if (filter.passengerName() != null) {
+            whereSql.add("passenger_name = ?");
+            parameters.add(filter.passengerName());
+        }
+        parameters.add(filter.limit());
+        parameters.add(filter.offset());
+
+        String where = whereSql.stream()
+                .collect(Collectors.joining(" AND ", "  WHERE ", " LIMIT ? OFFSET ?"));
+        String sql = FIND_ALL_SQL + where;
+
+        try (Connection connection = ConnectionPoolManager.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            for (int i = 0; i < parameters.size(); i++) {
+                preparedStatement.setObject(i + 1, parameters.get(i));
+            }
+            List<Ticket> tickets = new ArrayList<>();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                tickets.add(buildTicket(resultSet));
+            }
+            return tickets;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+
     }
 
     public List<Ticket> findAll() {

@@ -1,6 +1,7 @@
 package ru.ftptpf;
 
 import ru.ftptpf.dao.TicketDao;
+import ru.ftptpf.dto.TicketFilter;
 import ru.ftptpf.entity.Ticket;
 
 import java.math.BigDecimal;
@@ -13,7 +14,15 @@ public class DaoRunner {
         /*        saveTest();*/
         /*        deleteTest();*/
         /*        updateTest();*/
-        findAllTest();
+        /*        findAllTest();*/
+        findAllWithFilterTest();
+    }
+
+    private static void findAllWithFilterTest() {
+        TicketDao ticketDao = TicketDao.getInstance();
+        TicketFilter ticketFilter = new TicketFilter(2, 1, "A1", null);
+        List<Ticket> tickets = ticketDao.findAll(ticketFilter);
+        System.out.println(tickets);
     }
 
     private static void findAllTest() {
