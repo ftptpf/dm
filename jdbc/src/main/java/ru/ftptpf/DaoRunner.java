@@ -15,7 +15,14 @@ public class DaoRunner {
         /*        deleteTest();*/
         /*        updateTest();*/
         /*        findAllTest();*/
-        findAllWithFilterTest();
+        /*        findAllWithFilterTest();*/
+        findJoinTest();
+    }
+
+    private static void findJoinTest() {
+        TicketDao ticketDao = TicketDao.getInstance();
+        Optional<Ticket> maybeTicket = ticketDao.findById(7L);
+        System.out.println(maybeTicket);
     }
 
     private static void findAllWithFilterTest() {
@@ -52,7 +59,7 @@ public class DaoRunner {
         Ticket ticket = new Ticket();
         ticket.setPassengerNo("1234567890");
         ticket.setPassengerName("Кузьма Фомич");
-        ticket.setFlightId(11L);
+//        ticket.setFlight(11L);
         ticket.setSeatNo("D2");
         ticket.setCost(BigDecimal.valueOf(350));
 
