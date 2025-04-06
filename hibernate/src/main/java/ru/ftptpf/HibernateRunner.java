@@ -3,6 +3,9 @@ package ru.ftptpf;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import ru.ftptpf.entity.User;
+
+import java.time.LocalDate;
 
 public class HibernateRunner {
 
@@ -13,7 +16,14 @@ public class HibernateRunner {
         /*        configuration.configure("hibernate.properties");*/
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-            System.out.println("Session started: " + session.isConnected());
+            User user = User.builder()
+                    .username("ivan@gmail.com")
+                    .firstname("Ivan")
+                    .lastname("Ivanov")
+                    .birthDay(LocalDate.of(1990, 1, 1))
+                    .age(35)
+                    .build();
+            session.merge(user);
         }
     }
 }
