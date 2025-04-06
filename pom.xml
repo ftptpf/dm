@@ -12,6 +12,7 @@
         <module>cafe</module>
         <module>level2</module>
         <module>jdbc</module>
+        <module>hibernate</module>
     </modules>
 
     <properties>
