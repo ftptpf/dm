@@ -3,9 +3,12 @@ package ru.ftptpf;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import ru.ftptpf.entity.Role;
 import ru.ftptpf.entity.User;
 
 import java.time.LocalDate;
+
+import static ru.ftptpf.entity.Role.ADMIN;
 
 public class HibernateRunner {
 
@@ -24,6 +27,7 @@ public class HibernateRunner {
                     .lastname("Svetikova")
                     .birthDay(LocalDate.of(1999, 2, 12))
                     .age(25)
+                    .role(ADMIN)
                     .build();
             session.persist(user);
 
