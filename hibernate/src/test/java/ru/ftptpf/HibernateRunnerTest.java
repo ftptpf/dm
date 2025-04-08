@@ -3,6 +3,7 @@ package ru.ftptpf;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import org.junit.jupiter.api.Test;
+import ru.ftptpf.entity.Birthday;
 import ru.ftptpf.entity.User;
 
 import java.lang.reflect.Field;
@@ -22,8 +23,7 @@ class HibernateRunnerTest {
                 .username("sveta@gmail.com")
                 .firstname("Sveta")
                 .lastname("Svetikova")
-                .birthDay(LocalDate.of(1999, 2, 12))
-                .age(25)
+                .birthDay(new Birthday(LocalDate.of(1999, 2, 12)))
                 .build();
         String sql = """
                 INSERT INTO

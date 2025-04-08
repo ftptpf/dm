@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
+import ru.ftptpf.converter.BirthdayConverter;
 
 @Data
 @NoArgsConstructor
@@ -20,9 +19,9 @@ public class User {
     private String username;
     private String firstname;
     private String lastname;
+    @Convert(converter = BirthdayConverter.class)
     @Column(name = "birth_day")
-    private LocalDate birthDay;
-    private Integer age;
+    private Birthday birthDay;
     @Enumerated(EnumType.STRING)
     private Role role;
 
