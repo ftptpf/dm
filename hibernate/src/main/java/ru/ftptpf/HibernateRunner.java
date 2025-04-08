@@ -15,7 +15,9 @@ public class HibernateRunner {
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
+
             session.beginTransaction();
+
             User user = User.builder()
                     .username("sveta@gmail.com")
                     .firstname("Sveta")
@@ -24,6 +26,7 @@ public class HibernateRunner {
                     .age(25)
                     .build();
             session.persist(user);
+
             session.getTransaction().commit();
         }
     }
