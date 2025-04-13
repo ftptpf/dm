@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.ftptpf.entity.Birthday;
+import ru.ftptpf.entity.PersonalInfo;
 import ru.ftptpf.entity.Role;
 import ru.ftptpf.entity.User;
 import ru.ftptpf.util.HibernateUtil;
@@ -25,15 +26,17 @@ public class HibernateRunner {
             session.beginTransaction();
 
             User user = User.builder()
-                    .username("sveta@gmail.com")
-                    .firstname("Sveta")
-                    .lastname("Svetikova")
-                    .birthDay(new Birthday(LocalDate.of(1999, 2, 12)))
+                    .username("anna@gmail.com")
+                    .personalInfo(PersonalInfo.builder()
+                            .firstname("Anna")
+                            .lastname("Ivanova")
+                            .birthDay(new Birthday(LocalDate.of(1990, 11, 20)))
+                            .build())
                     .role(Role.ADMIN)
                     .info("""
                             {
-                                "name": "Sveta",
-                                "lastname": "Svetikova"
+                                "name": "Anna",
+                                "lastname": "Ivanova"
                             }
                             """)
                     .build();
@@ -49,11 +52,11 @@ public class HibernateRunner {
              */
             /*            session.merge(user);*/
             /*            session.remove(user);*/
-                        session.persist(user);
-            User sveta1 = session.find(User.class, "sveta@gmail.com");
+            session.persist(user);
+            User anna1 = session.find(User.class, "anna@gmail.com");
             /*
              * Три варианта удаления нашей сущности из кеша 1-го уровня:
-             * 1. session.evict(sveta1);
+             * 1. session.evict(anna);
              * 2. session.clear();
              * 3. session.close();
              * Кеш 1го уровня привязан к сессии. Как правило, он чистится при закрытии сессии.
@@ -64,11 +67,11 @@ public class HibernateRunner {
              * Flush - все изменения в сущностях в кеше 1го уровня в рамках одной сессии сливаются в базу данных.
              * Persistence Context сессии = кеш 1го уровня сессии.
              */
-            session.evict(sveta1);
-            User sveta2 = session.find(User.class, "sveta@gmail.com");
+            session.evict(anna1);
+            User anna2 = session.find(User.class, "anna@gmail.com");
 
-            System.out.println(sveta1.getUsername());
-            System.out.println(sveta2.getUsername());
+            System.out.println(anna1.getUsername());
+            System.out.println(anna2.getUsername());
 
             session.getTransaction().commit();
         }

@@ -2,6 +2,7 @@ package ru.ftptpf;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import ru.ftptpf.entity.PersonalInfo;
 import ru.ftptpf.entity.User;
 import ru.ftptpf.util.HibernateUtil;
 
@@ -12,8 +13,10 @@ public class HibernateEntityRunner {
 
         User user = User.builder()
                 .username("ivan@gmail.com")
-                .firstname("Ivan")
-                .lastname("Ivanov")
+                .personalInfo(PersonalInfo.builder()
+                        .firstname("Иван")
+                        .lastname("Иванов")
+                        .build())
                 .build();
 //        user после инициализации находится в состоянии Transient
 
