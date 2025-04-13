@@ -2,6 +2,8 @@ package ru.ftptpf;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.ftptpf.entity.Birthday;
 import ru.ftptpf.entity.Role;
 import ru.ftptpf.entity.User;
@@ -11,10 +13,14 @@ import java.time.LocalDate;
 
 public class HibernateRunner {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HibernateRunner.class);
+
     public static void main(String[] args) {
 
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
+
+            LOGGER.info("SessionFactory: {}", sessionFactory);
 
             session.beginTransaction();
 
@@ -31,6 +37,9 @@ public class HibernateRunner {
                             }
                             """)
                     .build();
+
+            LOGGER.info("User: {}", user);
+
             /*
              * save = persist - добавляет объект в базу данных
              * update = merge - обновляет объект в базе данных
@@ -40,7 +49,7 @@ public class HibernateRunner {
              */
             /*            session.merge(user);*/
             /*            session.remove(user);*/
-            /*            session.persist(user);*/
+                        session.persist(user);
             User sveta1 = session.find(User.class, "sveta@gmail.com");
             /*
              * Три варианта удаления нашей сущности из кеша 1-го уровня:
