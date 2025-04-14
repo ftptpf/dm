@@ -26,7 +26,7 @@ public class HibernateRunner {
             session.beginTransaction();
 
             User user = User.builder()
-                    .username("anna2@gmail.com")
+                    .username("anna@gmail.com")
                     .personalInfo(PersonalInfo.builder()
                             .firstname("Anna")
                             .lastname("Ivanova")
@@ -52,8 +52,13 @@ public class HibernateRunner {
              */
             /*            session.merge(user);*/
             /*            session.remove(user);*/
+            PersonalInfo key = PersonalInfo.builder()
+                    .firstname("Anna")
+                    .lastname("Ivanova")
+                    .birthDay(new Birthday(LocalDate.of(1990, 11, 20)))
+                    .build();
             session.persist(user);
-            User anna1 = session.find(User.class, 1);
+            User anna1 = session.find(User.class, key);
             /*
              * Три варианта удаления нашей сущности из кеша 1-го уровня:
              * 1. session.evict(anna);
@@ -68,7 +73,7 @@ public class HibernateRunner {
              * Persistence Context сессии = кеш 1го уровня сессии.
              */
 /*            session.evict(anna1);*/
-            User anna2 = session.find(User.class, 1);
+            User anna2 = session.find(User.class, key);
 
             System.out.println(anna1.getUsername());
             System.out.println(anna2.getUsername());

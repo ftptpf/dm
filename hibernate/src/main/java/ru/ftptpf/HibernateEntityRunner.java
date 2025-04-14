@@ -3,9 +3,12 @@ package ru.ftptpf;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import ru.ftptpf.entity.Birthday;
 import ru.ftptpf.entity.PersonalInfo;
 import ru.ftptpf.entity.User;
 import ru.ftptpf.util.HibernateUtil;
+
+import java.time.LocalDate;
 
 @Slf4j
 public class HibernateEntityRunner {
@@ -18,6 +21,7 @@ public class HibernateEntityRunner {
                 .personalInfo(PersonalInfo.builder()
                         .firstname("Иван")
                         .lastname("Иванов")
+                        .birthDay(new Birthday(LocalDate.of(1988, 10, 10)))
                         .build())
                 .build();
 //        user после инициализации находится в состоянии Transient

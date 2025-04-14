@@ -9,12 +9,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.ftptpf.converter.BirthdayConverter;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Embeddable
-public class PersonalInfo {
+public class PersonalInfo implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 124312321354354676L;
+
     private String firstname;
     private String lastname;
     @Convert(converter = BirthdayConverter.class)

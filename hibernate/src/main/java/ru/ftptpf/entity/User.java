@@ -16,15 +16,16 @@ import org.hibernate.type.SqlTypes;
 @Table(name = "users", schema = "public")
 public class User {
 
-    @Id
+/*    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;*/
+
+    @EmbeddedId
+    private PersonalInfo personalInfo;
 
     @Column(unique = true)
     private String username;
 
-    @Embedded
-    private PersonalInfo personalInfo;
 
     @Enumerated(EnumType.STRING)
     private Role role;
