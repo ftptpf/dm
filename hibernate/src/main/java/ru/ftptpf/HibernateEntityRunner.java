@@ -1,11 +1,13 @@
 package ru.ftptpf;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.ftptpf.entity.PersonalInfo;
 import ru.ftptpf.entity.User;
 import ru.ftptpf.util.HibernateUtil;
 
+@Slf4j
 public class HibernateEntityRunner {
 
 

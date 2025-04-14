@@ -17,12 +17,11 @@ import org.hibernate.type.SqlTypes;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true)
     private String username;
-/*    private String firstname;
-    private String lastname;
-    @Convert(converter = BirthdayConverter.class)
-    @Column(name = "birth_day")
-    private Birthday birthDay;*/
 
     @Embedded
     private PersonalInfo personalInfo;
