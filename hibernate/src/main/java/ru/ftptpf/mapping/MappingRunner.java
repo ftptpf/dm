@@ -31,10 +31,14 @@ public class MappingRunner {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
                 session.beginTransaction();
-                session.persist(company);
+/*                session.persist(company);
                 log.info("We save company: {}", company);
                 session.persist(user);
-                log.info("We save user: {}", user);
+                log.info("We save user: {}", user);*/
+
+                User user1 = session.find(User.class, 1L);
+                log.info("We find user1: {}", user1);
+
                 session.getTransaction().commit();
             }
         }

@@ -1,10 +1,7 @@
 package ru.ftptpf.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import ru.ftptpf.entity.Company;
@@ -12,6 +9,7 @@ import ru.ftptpf.entity.Company;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"company"})
 @Builder
 @Entity
 @Table(name = "users")
@@ -32,7 +30,7 @@ public class User {
     @JdbcTypeCode(SqlTypes.JSON)
     private String info;
 
-    @ManyToOne()
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
