@@ -41,6 +41,8 @@ public class MappingRunner {
                 Company company1 = user1.getCompany();
                 Integer id = company1.getId();
                 log.info("User has company: {} with id: {}", company1, id);
+                session.detach(user1);
+                log.info("User {} is detached", user1);
 
                 session.getTransaction().commit();
             }
