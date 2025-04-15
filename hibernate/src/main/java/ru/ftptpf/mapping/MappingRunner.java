@@ -38,6 +38,9 @@ public class MappingRunner {
 
                 User user1 = session.find(User.class, 1L);
                 log.info("We find user1: {}", user1);
+                Company company1 = user1.getCompany();
+                Integer id = company1.getId();
+                log.info("User has company: {} with id: {}", company1, id);
 
                 session.getTransaction().commit();
             }
