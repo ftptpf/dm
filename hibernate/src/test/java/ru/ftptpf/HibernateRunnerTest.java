@@ -2,9 +2,12 @@ package ru.ftptpf;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
+import lombok.Cleanup;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
-import ru.ftptpf.entity.Birthday;
-import ru.ftptpf.entity.User;
+import ru.ftptpf.entity.*;
+import ru.ftptpf.util.HibernateUtil;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -18,12 +21,28 @@ import java.util.stream.Collectors;
 class HibernateRunnerTest {
 
     @Test
+    void oneToMany() {
+        @Cleanup SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+        @Cleanup Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Company company = session.find(Company.class, 1L);
+        System.out.println(company.getName());
+
+        session.getTransaction().commit();
+
+    }
+
+    @Test
     void checkReflectionApi() throws SQLException, IllegalAccessException {
         User user = User.builder()
-                .username("sveta@gmail.com")
-                .firstname("Sveta")
-                .lastname("Svetikova")
-                .birthDay(new Birthday(LocalDate.of(1999, 2, 12)))
+                .username("ivan@gmail.com")
+                .personalInfo(PersonalInfo.builder()
+                        .firstname("Иван")
+                        .lastname("Иванов")
+                        .birthDay(new Birthday(LocalDate.of(1988, 10, 10)))
+                        .build())
+                .role(Role.USER)
                 .build();
         String sql = """
                 INSERT INTO
