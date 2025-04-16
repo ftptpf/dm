@@ -21,6 +21,26 @@ import java.util.stream.Collectors;
 class HibernateRunnerTest {
 
     @Test
+    void addUserToNewCompany() {
+        @Cleanup SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+        @Cleanup Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Company company = Company.builder()
+                .name("Facebook")
+                .build();
+        User user = User.builder()
+                .username("igor@gmail.com")
+                .build();
+        company.addUser(user);
+
+        session.persist(company);
+
+        session.getTransaction().commit();
+
+    }
+
+
+    @Test
     void oneToMany() {
         @Cleanup SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
         @Cleanup Session session = sessionFactory.openSession();
