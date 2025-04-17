@@ -33,7 +33,7 @@ public class User {
     // лучше не делать здесь каскадное сохранение, так как когда сохраняем юзера, компания уже должна существовать
     // компания является главной сущностью над юзером
     // CascadeType лучше ставить над ассоциацией OneToMane
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
