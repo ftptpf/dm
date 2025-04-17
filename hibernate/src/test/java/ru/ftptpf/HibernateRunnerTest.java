@@ -16,9 +16,26 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 class HibernateRunnerTest {
+
+    @Test
+    void checkLazyInitialization() {
+        Company company = null;
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            company = session.find(Company.class, 1L);
+
+            session.getTransaction().commit();
+        }
+        Set<User> users = company.getUsers();
+        // Будет LazyInitializationException, т.к. сессия уже закрыта
+        System.out.println(users.size());
+    }
 
     @Test
     void addUserToNewCompany() {
@@ -36,9 +53,7 @@ class HibernateRunnerTest {
         session.persist(company);
 
         session.getTransaction().commit();
-
     }
-
 
     @Test
     void oneToMany() {

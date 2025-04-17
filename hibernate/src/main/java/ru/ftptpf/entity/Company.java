@@ -26,7 +26,7 @@ public class Company {
     private String name;
 
     @Builder.Default
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
     public void addUser(User user) {
