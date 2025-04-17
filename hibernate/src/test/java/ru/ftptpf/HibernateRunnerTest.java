@@ -22,6 +22,26 @@ import java.util.stream.Collectors;
 class HibernateRunnerTest {
 
     @Test
+    void checkOneToOne() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            User user = User.builder()
+                    .username("gragor@gmail.com")
+                    .build();
+            Profile profile = Profile.builder()
+                    .street("Ленина")
+                    .language("ru")
+                    .build();
+            session.persist(user);
+            profile.setUser(user);
+
+            session.getTransaction().commit();
+        }
+    }
+
+    @Test
     void checkOrhanRemoval() {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {

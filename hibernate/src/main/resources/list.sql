@@ -18,5 +18,13 @@ id SERIAL PRIMARY KEY,
 name VARCHAR(64) NOT NULL UNIQUE
 );
 
+CREATE TABLE IF NOT EXISTS profile
+(
+user_id BIGINT PRIMARY KEY REFERENCES users(id),
+street VARCHAR(128),
+language CHAR(2)
+);
+
 DROP TABLE users;
 DROP TABLE company;
+DROP TABLE profile;
