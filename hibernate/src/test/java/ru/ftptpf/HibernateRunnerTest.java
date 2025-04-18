@@ -13,6 +13,7 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
@@ -29,12 +30,15 @@ class HibernateRunnerTest {
             session.beginTransaction();
 
             User user = session.find(User.class, 2L);
-            Chat chat = Chat.builder()
-                    .name("Chat")
+            Chat chat = session.find(Chat.class, 1L);
+            UserChat userChat = UserChat.builder()
+                    .createdAt(Instant.now())
+                    .createdBy(user.getUsername())
                     .build();
-            user.addChat(chat);
-            session.persist(chat);
+            userChat.setUser(user);
+            userChat.setChat(chat);
 
+            session.persist(userChat);
 
             session.getTransaction().commit();
         }
