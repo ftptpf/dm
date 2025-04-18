@@ -5,10 +5,14 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"company", "profile"})
+@EqualsAndHashCode(of = "username")
+@ToString(exclude = {"company", "profile", "chats"})
 @Builder
 @Entity
 @Table(name = "users")
@@ -38,5 +42,18 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Profile profile;
+
+    @Builder.Default
+    @ManyToMany
+    @JoinTable(name = "users_chat",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id"))
+    private Set<Chat> chats = new HashSet<>();
+
+    public void addChat(Chat chat) {
+        chats.add(chat);
+        chat.getUsers().add(this);
+    }
+
 
 }

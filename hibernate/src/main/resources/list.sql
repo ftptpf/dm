@@ -26,6 +26,22 @@ street VARCHAR(128),
 language CHAR(2)
 );
 
+CREATE TABLE IF NOT EXISTS chat
+(
+id BIGSERIAL PRIMARY KEY,
+name VARCHAR(64) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS users_chat
+(
+user_id BIGINT REFERENCES users(id),
+chat_id BIGINT REFERENCES chat(id),
+PRIMARY KEY (user_id, chat_id)
+);
+
+
 DROP TABLE users;
 DROP TABLE company;
 DROP TABLE profile;
+DROP TABLE chat;
+DROP TABLE users_chat;

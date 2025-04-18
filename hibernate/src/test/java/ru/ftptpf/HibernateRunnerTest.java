@@ -21,6 +21,25 @@ import java.util.stream.Collectors;
 
 class HibernateRunnerTest {
 
+
+    @Test
+    void checkManyToMane() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            User user = session.find(User.class, 2L);
+            Chat chat = Chat.builder()
+                    .name("Chat")
+                    .build();
+            user.addChat(chat);
+            session.persist(chat);
+
+
+            session.getTransaction().commit();
+        }
+    }
+
     @Test
     void checkOneToOne() {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
