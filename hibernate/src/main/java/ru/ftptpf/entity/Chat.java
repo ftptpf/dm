@@ -3,8 +3,8 @@ package ru.ftptpf.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,6 +25,7 @@ public class Chat {
 
     @Builder.Default
     @OneToMany(mappedBy = "chat")
-    private Set<UserChat> userChats = new HashSet<>();
+    // для лучшей производительности лучше использовать LIST вместо SET
+    private List<UserChat> userChats = new ArrayList<>();
 
 }
