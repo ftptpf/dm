@@ -42,6 +42,13 @@ created_by VARCHAR(128) NOT NULL,
 UNIQUE (user_id, chat_id)
 );
 
+CREATE TABLE IF NOT EXISTS company_locale
+(
+company_id INT NOT NULL REFERENCES company(id),
+lang CHAR(2) NOT NULL,
+description VARCHAR(512) NOT NULL,
+PRIMARY KEY (company_id, lang)
+);
 
 DROP TABLE users;
 DROP TABLE company;

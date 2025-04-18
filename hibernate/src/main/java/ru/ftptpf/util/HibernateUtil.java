@@ -15,6 +15,7 @@ public class HibernateUtil {
         configuration.addAnnotatedClass(Profile.class);
         configuration.addAnnotatedClass(Chat.class);
         configuration.addAnnotatedClass(UserChat.class);
+        configuration.addAnnotatedClass(LocaleInfo.class);
         return configuration.buildSessionFactory();
     }
 }

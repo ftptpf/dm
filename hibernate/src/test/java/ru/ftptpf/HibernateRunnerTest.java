@@ -22,6 +22,19 @@ import java.util.stream.Collectors;
 
 class HibernateRunnerTest {
 
+    @Test
+    void checkLocaleInfo() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            Company company = session.find(Company.class, 1L);
+            company.getLocales().add(LocaleInfo.of("ru", "Описание на русском"));
+            company.getLocales().add(LocaleInfo.of("en", "Description on English"));
+
+            session.getTransaction().commit();
+        }
+    }
 
     @Test
     void checkManyToMane() {
