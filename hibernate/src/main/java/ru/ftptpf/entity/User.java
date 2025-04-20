@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Comparable<User> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,4 +48,8 @@ public class User {
     // для лучшей производительности лучше использовать LIST вместо SET
     private List<UserChat> userChats = new ArrayList<>();
 
+    @Override
+    public int compareTo(User o) {
+        return username.compareToIgnoreCase(o.getUsername());
+    }
 }
