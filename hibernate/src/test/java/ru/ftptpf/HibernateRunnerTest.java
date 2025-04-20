@@ -31,7 +31,7 @@ class HibernateRunnerTest {
             Company company = session.find(Company.class, 4L);
 /*            company.getLocales().add(LocaleInfo.of("ru", "Описание на русском"));
             company.getLocales().add(LocaleInfo.of("en", "Description on English"));*/
-            company.getUsers().forEach(System.out::println);
+            company.getUsers().forEach((k, v) -> System.out.println(v));
 
             session.getTransaction().commit();
         }
@@ -85,7 +85,7 @@ class HibernateRunnerTest {
             session.beginTransaction();
 
             Company company = session.find(Company.class, 1L);
-            company.getUsers().removeIf(user -> user.getId() == 1L);
+//            company.getUsers().removeIf(user -> user.getId() == 1L);
 
             session.getTransaction().commit();
         }
@@ -102,9 +102,9 @@ class HibernateRunnerTest {
 
             session.getTransaction().commit();
         }
-        Set<User> users = company.getUsers();
+//        Set<User> users = company.getUsers();
         // Будет LazyInitializationException, т.к. сессия уже закрыта
-        System.out.println(users.size());
+//        System.out.println(users.size());
     }
 
     @Test

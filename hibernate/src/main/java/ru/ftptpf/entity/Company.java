@@ -27,8 +27,10 @@ public class Company {
     @Builder.Default
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @OrderBy("username DESC, personalInfo.lastname ASC")
+    @MapKey(name = "username")
     @SortNatural
-    private SortedSet<User> users = new TreeSet<>();
+    /*    private SortedSet<User> users = new TreeSet<>();*/
+    private Map<String, User> users = new TreeMap<>();
 
     @Builder.Default
     @ElementCollection
@@ -37,7 +39,7 @@ public class Company {
     private List<LocaleInfo> locales = new ArrayList<>();
 
     public void addUser(User user) {
-        users.add(user);
+        users.put(user.getUsername(), user);
         user.setCompany(this);
     }
 }
