@@ -32,7 +32,7 @@ class HibernateRunnerTest {
                     .build();
             session.persist(company);
 
-            Programmer programmer = Programmer.builder()
+/*            Programmer programmer = Programmer.builder()
                     .username("sergey@gmail.com")
                     .language(Language.JAVA)
                     .company(company)
@@ -55,6 +55,8 @@ class HibernateRunnerTest {
             System.out.println(managerFromDb);
 
             session.getTransaction().commit();
+
+ */
         }
     }
 
