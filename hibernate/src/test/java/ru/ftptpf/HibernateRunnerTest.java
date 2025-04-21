@@ -17,10 +17,46 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 class HibernateRunnerTest {
+
+    @Test
+    void checkH2Inheritance() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            Company company = Company.builder()
+                    .name("Google")
+                    .build();
+            session.persist(company);
+
+            Programmer programmer = Programmer.builder()
+                    .username("sergey@gmail.com")
+                    .language(Language.JAVA)
+                    .company(company)
+                    .build();
+            session.persist(programmer);
+
+            Manager manager = Manager.builder()
+                    .username("peter@gmail.com")
+                    .projectName("Project A")
+                    .company(company)
+                    .build();
+            session.persist(manager);
+            session.flush();
+
+            session.clear();
+
+            Programmer programmerFromDb = session.find(Programmer.class, 1L);
+            Manager managerFromDb = session.find(Manager.class, 2L);
+            System.out.println(programmerFromDb);
+            System.out.println(managerFromDb);
+
+            session.getTransaction().commit();
+        }
+    }
 
     @Test
     void checkH2() {
