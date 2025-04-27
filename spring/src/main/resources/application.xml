@@ -5,10 +5,20 @@
 		https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id = "pool1" class="ru.ftptpf.database.pool.ConnectionPool">
-        <!-- collaborators and configuration for this bean go here -->
-    </bean>
-    <bean id = "pool2" class="ru.ftptpf.database.pool.ConnectionPool">
-        <!-- collaborators and configuration for this bean go here -->
+        <constructor-arg name="username" value="postgres"/>
+        <constructor-arg name="poolSize" value="10"/>
+        <constructor-arg name="args">
+            <list>
+                <value>--arg1=value1</value>
+                <value>--arg2=value2</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg name="properties">
+            <map>
+                <entry key="url" value="postgresurl"/>
+                <entry key="password" value="123"/>
+            </map>
+        </constructor-arg>
     </bean>
 
 
