@@ -13,6 +13,10 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
+    <bean class="ru.ftptpf.bfpp.LogBeanFactoryPostProcessor"/>
+    <bean class="ru.ftptpf.bfpp.VerifyPropertyBeanFactoryPostProcessor"/>
+
+
     <bean id="driver" class="java.lang.String">
         <constructor-arg type="java.lang.String" value="${db.driver}"/>
     </bean>
