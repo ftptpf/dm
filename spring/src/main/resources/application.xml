@@ -8,7 +8,8 @@
         <constructor-arg type="java.lang.String" value="PostgresDriver"/>
     </bean>
 
-    <bean id = "pool1" name="p1, p2, p3" class="ru.ftptpf.database.pool.ConnectionPool">
+    <bean id = "pool1" name="p1, p2, p3" class="ru.ftptpf.database.pool.ConnectionPool"
+          init-method="init" destroy-method="destroy" scope="singleton">
         <constructor-arg name="username" value="postgres"/>
         <constructor-arg name="poolSize" value="10"/>
         <constructor-arg name="args">
