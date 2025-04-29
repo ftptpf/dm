@@ -12,6 +12,7 @@
 
     <bean class="ru.ftptpf.bfpp.LogBeanFactoryPostProcessor"/>
     <bean class="ru.ftptpf.bfpp.VerifyPropertyBeanFactoryPostProcessor"/>
+    <bean class="ru.ftptpf.bpp.InjectBeanPostProcessor"/>
 
 
     <bean id="driver" class="java.lang.String">
@@ -42,9 +43,7 @@
         </property>
     </bean>
 
-    <bean id="companyRepository" class="ru.ftptpf.database.repository.CompanyRepository" factory-method="of">
-        <constructor-arg ref="pool1"/>
-    </bean>
+    <bean id="companyRepository" class="ru.ftptpf.database.repository.CompanyRepository"/>
 
 
     <!-- more bean definitions go here -->
