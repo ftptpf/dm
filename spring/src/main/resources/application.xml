@@ -13,6 +13,8 @@
     <bean class="ru.ftptpf.bfpp.LogBeanFactoryPostProcessor"/>
     <bean class="ru.ftptpf.bfpp.VerifyPropertyBeanFactoryPostProcessor"/>
     <bean class="ru.ftptpf.bpp.InjectBeanPostProcessor"/>
+    <bean class="ru.ftptpf.bpp.TransactionBeanPostProcessor"/>
+    <bean class="ru.ftptpf.bpp.AuditingBeanPostProcessor"/>
 
 
     <bean id="driver" class="java.lang.String">
