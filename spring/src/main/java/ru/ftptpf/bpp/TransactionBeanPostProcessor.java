@@ -3,11 +3,13 @@ package ru.ftptpf.bpp;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class TransactionBeanPostProcessor implements BeanPostProcessor {
 
     private final Map<String, Class<?>> transactionsBeans = new HashMap<>();

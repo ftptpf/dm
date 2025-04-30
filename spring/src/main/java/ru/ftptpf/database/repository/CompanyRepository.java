@@ -1,11 +1,10 @@
 package ru.ftptpf.database.repository;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import ru.ftptpf.bpp.Auditing;
-import ru.ftptpf.bpp.InjectBean;
 import ru.ftptpf.bpp.Transaction;
 import ru.ftptpf.database.entity.Company;
 import ru.ftptpf.database.pool.ConnectionPool;
@@ -13,17 +12,22 @@ import ru.ftptpf.database.pool.ConnectionPool;
 import java.util.List;
 import java.util.Optional;
 
+@Resource
 @Transaction
 @Auditing
 public class CompanyRepository implements CrudRepository<Integer, Company> {
 
-    @Autowired
-    @Qualifier("pool1")
-    private ConnectionPool pool;
-    @Autowired
-    private List<ConnectionPool> pools;
-    @Value("${db.pool.size}")
-    private Integer poolSize;
+    private final ConnectionPool pool;
+    private final List<ConnectionPool> pools;
+    private final Integer poolSize;
+
+    public CompanyRepository(@Qualifier("pool1") ConnectionPool pool,
+                             List<ConnectionPool> pools,
+                             @Value("${db.pool.size}") Integer poolSize) {
+        this.pool = pool;
+        this.pools = pools;
+        this.poolSize = poolSize;
+    }
 
     @PostConstruct
     private void init() {
