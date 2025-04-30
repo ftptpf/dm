@@ -21,6 +21,7 @@
         <constructor-arg type="java.lang.String" value="${db.driver}"/>
     </bean>
 
+    <bean id="pool2" class="ru.ftptpf.database.pool.ConnectionPool"/>
     <bean id="pool1" name="p1, p2, p3" class="ru.ftptpf.database.pool.ConnectionPool">
         <constructor-arg name="username" value="${db.username}"/>
         <constructor-arg name="poolSize" value="${db.pool.size}"/>
