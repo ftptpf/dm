@@ -4,6 +4,8 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import ru.ftptpf.bpp.Auditing;
 import ru.ftptpf.bpp.Transaction;
 import ru.ftptpf.database.entity.Company;
@@ -12,6 +14,7 @@ import ru.ftptpf.database.pool.ConnectionPool;
 import java.util.List;
 import java.util.Optional;
 
+@Scope(BeanDefinition.SCOPE_SINGLETON)
 @Resource
 @Transaction
 @Auditing
