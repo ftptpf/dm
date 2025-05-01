@@ -2,10 +2,7 @@ package ru.ftptpf.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import ru.ftptpf.database.pool.ConnectionPool;
 import ru.ftptpf.database.repository.UserRepository;
 
@@ -24,6 +21,7 @@ public class ApplicationConfiguration {
         return new ConnectionPool(username, 25);
     }
 
+    @Profile("prod | web")
     @Bean("userRepository2")
     public UserRepository userRepository(@Qualifier("pool2") ConnectionPool pool) {
         return new UserRepository(pool);
