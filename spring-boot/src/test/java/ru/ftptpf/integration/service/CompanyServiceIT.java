@@ -1,15 +1,22 @@
 package ru.ftptpf.integration.service;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestConstructor;
 import ru.ftptpf.dto.CompanyReadDto;
+import ru.ftptpf.integration.annotation.IT;
 import ru.ftptpf.service.CompanyService;
 
 import java.util.Optional;
 
-@SpringBootTest
+@IT
+@RequiredArgsConstructor
+/*@ActiveProfiles("test")
+@SpringBootTest*/
 /*@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ApplicationRunner.class,
         initializers = ConfigDataApplicationContextInitializer.class)*/
