@@ -13,6 +13,7 @@ import ru.ftptpf.database.repository.CrudRepository;
 import ru.ftptpf.dto.CompanyReadDto;
 import ru.ftptpf.listener.entity.EntityEvent;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +32,7 @@ class CompanyServiceTest {
 
     @Test
     void findById() {
-        Mockito.doReturn(Optional.of(new Company(COMPANY_ID)))
+        Mockito.doReturn(Optional.of(new Company(COMPANY_ID, null, Collections.emptyMap())))
                 .when(companyRepository).findById(COMPANY_ID);
 
         Optional<CompanyReadDto> actualResult = companyService.findById(COMPANY_ID);
