@@ -2,6 +2,7 @@ package ru.ftptpf.service;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.ftptpf.database.entity.Company;
 import ru.ftptpf.database.repository.CrudRepository;
 import ru.ftptpf.dto.CompanyReadDto;
@@ -25,6 +26,7 @@ public class CompanyService {
         this.eventPublisher = eventPublisher;
     }
 
+    @Transactional
     public Optional<CompanyReadDto> findById(Integer id) {
         return companyRepository.findById(id)
                 .map(entity -> {
