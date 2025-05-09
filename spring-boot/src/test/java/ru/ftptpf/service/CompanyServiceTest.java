@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 import ru.ftptpf.database.entity.Company;
-import ru.ftptpf.database.repository.CrudRepository;
+import ru.ftptpf.database.repository.CompanyRepository;
 import ru.ftptpf.dto.CompanyReadDto;
 import ru.ftptpf.listener.entity.EntityEvent;
 
@@ -22,7 +22,7 @@ class CompanyServiceTest {
     public static final Integer COMPANY_ID = 1;
 
     @Mock
-    private CrudRepository<Integer, Company> companyRepository;
+    private CompanyRepository companyRepository;
     @Mock
     private UserService userService;
     @Mock
