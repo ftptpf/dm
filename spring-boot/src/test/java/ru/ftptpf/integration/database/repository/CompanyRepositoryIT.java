@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import ru.ftptpf.database.entity.Company;
 import ru.ftptpf.integration.annotation.IT;
 
@@ -14,19 +15,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @IT
-@Transactional
+//@Transactional
 @Rollback
 //@Commit
 class CompanyRepositoryIT {
 
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private TransactionTemplate transactionTemplate;
 
     @Test
     void findById() {
-        Company company = entityManager.find(Company.class, 1);
-        assertNotNull(company);
-        assertThat(company.getLocales()).hasSize(2);
+        transactionTemplate.executeWithoutResult(tx -> {
+            Company company = entityManager.find(Company.class, 1);
+            assertNotNull(company);
+            assertThat(company.getLocales()).hasSize(2);
+        });
     }
 
     @Test
