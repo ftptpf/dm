@@ -1,18 +1,19 @@
 package ru.ftptpf.database.repository;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Repository;
-import ru.ftptpf.database.pool.ConnectionPool;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import ru.ftptpf.database.entity.User;
 
-@Scope(BeanDefinition.SCOPE_SINGLETON)
-@Repository
-public class UserRepository {
+import java.util.List;
 
-    private final ConnectionPool pool;
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    public UserRepository(@Qualifier("pool1") ConnectionPool pool) {
-        this.pool = pool;
-    }
+    @Query("select u from User u where u.firstname like %:firstname% and u.lastname like %:lastname%")
+    List<User> findAllBy(@Param("firstname") String firstname, @Param("lastname") String lastname);
+
+    @Query(value = "SELECT u.* FROM users u WHERE u.username = :username",
+            nativeQuery = true)
+    List<User> findAllByUsername(@Param("firstname") String username);
+
 }
