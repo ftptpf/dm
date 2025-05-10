@@ -1,13 +1,17 @@
 package ru.ftptpf.database.repository;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.ftptpf.database.entity.Company;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface CompanyRepository extends Repository<Company, Integer> {
+public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
-    Optional<Company> findById(Integer id);
+    // Optional, Entity, Future
+    Optional<Company> findByName(String name);
 
-    void delete(Company entity);
+    // Collection, Stream (batch, close)
+    List<Company> findAllByNameContainingIgnoreCase(String fragment);
+
 }
