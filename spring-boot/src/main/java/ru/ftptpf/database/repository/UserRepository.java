@@ -1,5 +1,7 @@
 package ru.ftptpf.database.repository;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -7,7 +9,9 @@ import org.springframework.data.repository.query.Param;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.database.entity.User;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -21,5 +25,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.role = :role where u.id in (:ids)")
     int updateRole(@Param("role") Role role, @Param("ids") Long... ids);
+
+    Optional<User> findFirstByOrderByIdDesc();
+
+    List<User> findTop3ByBirthDateBefore(LocalDate birthDate, Sort sort);
+
+    List<User> findAllBy(Pageable pageable);
 
 }
