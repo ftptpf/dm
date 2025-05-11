@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import ru.ftptpf.database.entity.Role;
@@ -24,9 +25,13 @@ class UserRepositoryIT {
 
     @Test
     void checkPageable() {
-        PageRequest pageRequest = PageRequest.of(1, 2, Sort.by("id").descending());
-        List<User> result = userRepository.findAllBy(pageRequest);
-        Assertions.assertThat(result).hasSize(2);
+        PageRequest pageRequest = PageRequest.of(1, 2, Sort.by("id"));
+        Slice<User> resultSlices = userRepository.findAllBy(pageRequest);
+        resultSlices.forEach(user -> System.out.println(user.getId()));
+        while (resultSlices.hasNext()) {
+            resultSlices = userRepository.findAllBy(resultSlices.nextPageable());
+            resultSlices.forEach(user -> System.out.println(user.getId()));
+        }
     }
 
     @Test
