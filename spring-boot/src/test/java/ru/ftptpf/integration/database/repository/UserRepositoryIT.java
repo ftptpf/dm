@@ -10,6 +10,8 @@ import org.springframework.test.annotation.Rollback;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.database.entity.User;
 import ru.ftptpf.database.repository.UserRepository;
+import ru.ftptpf.dto.PersonalInfo;
+import ru.ftptpf.dto.PersonalInfo2;
 import ru.ftptpf.integration.annotation.IT;
 
 import java.time.LocalDate;
@@ -22,6 +24,12 @@ class UserRepositoryIT {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Test
+    void checkProjections() {
+        List<PersonalInfo2> personalInfoList = userRepository.findAllByCompanyId(1);
+        Assertions.assertThat(personalInfoList).hasSize(2);
+    }
 
     @Test
     void checkPageable() {

@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.database.entity.User;
+import ru.ftptpf.dto.PersonalInfo;
+import ru.ftptpf.dto.PersonalInfo2;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,4 +39,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //    @EntityGraph("User.company")
     @EntityGraph(attributePaths = {"company", "company.locales"})
     Page<User> findAllBy(Pageable pageable);
+
+//    List<PersonalInfo> findAllByCompanyId(Integer companyId);
+
+    @Query(value = "SELECT firstname, lastname, birth_date birthDate FROM users u WHERE u.company_id = :companyId",
+            nativeQuery = true)
+    List<PersonalInfo2> findAllByCompanyId(@Param("companyId") Integer companyId);
 }
