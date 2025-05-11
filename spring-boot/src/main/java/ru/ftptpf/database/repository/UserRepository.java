@@ -1,12 +1,11 @@
 package ru.ftptpf.database.repository;
 
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.QueryHint;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.database.entity.User;
@@ -30,6 +29,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findFirstByOrderByIdDesc();
 
+    @QueryHints(@QueryHint(name = "org.hibernate.fetchSize", value = "10"))
+    @Lock(LockModeType.PESSIMISTIC_READ)
     List<User> findTop3ByBirthDateBefore(LocalDate birthDate, Sort sort);
 
     //    Slice<User> findAllBy(Pageable pageable);
