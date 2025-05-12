@@ -12,6 +12,7 @@ import ru.ftptpf.database.entity.User;
 import ru.ftptpf.database.repository.UserRepository;
 import ru.ftptpf.dto.PersonalInfo;
 import ru.ftptpf.dto.PersonalInfo2;
+import ru.ftptpf.dto.UserFilter;
 import ru.ftptpf.integration.annotation.IT;
 
 import java.time.LocalDate;
@@ -24,6 +25,13 @@ class UserRepositoryIT {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Test
+    void checkCustomImplementation() {
+        UserFilter filter = new UserFilter(null, "%ov%", LocalDate.now());
+        List<User> users = userRepository.findAllByFilter(filter);
+        Assertions.assertThat(users).hasSize(4);
+    }
 
     @Test
     void checkProjections() {

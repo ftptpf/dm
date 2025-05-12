@@ -9,14 +9,13 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.database.entity.User;
-import ru.ftptpf.dto.PersonalInfo;
 import ru.ftptpf.dto.PersonalInfo2;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, FilterUserRepository {
 
     @Query("select u from User u where u.firstname like %:firstname% and u.lastname like %:lastname%")
     List<User> findAllBy(@Param("firstname") String firstname, @Param("lastname") String lastname);
