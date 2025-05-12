@@ -27,6 +27,14 @@ class UserRepositoryIT {
     private UserRepository userRepository;
 
     @Test
+    void checkAuditing() {
+        User ivan = userRepository.getReferenceById(1L);
+        ivan.setBirthDate(ivan.getBirthDate().plusDays(1));
+        userRepository.flush();
+        System.out.println();
+    }
+
+    @Test
     void checkCustomImplementation() {
         UserFilter filter = new UserFilter(null, "%ov%", LocalDate.now());
         List<User> users = userRepository.findAllByFilter(filter);
