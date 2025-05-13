@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.database.entity.User;
@@ -27,6 +28,7 @@ class UserRepositoryIT {
     private UserRepository userRepository;
 
     @Test
+    @Commit
     void checkAuditing() {
         User ivan = userRepository.getReferenceById(1L);
         ivan.setBirthDate(ivan.getBirthDate().plusDays(1));

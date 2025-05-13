@@ -2,11 +2,15 @@ package ru.ftptpf.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 @NamedEntityGraph(name = "User.company", attributeNodes = @NamedAttributeNode("company"))
 @Data
 @ToString(exclude = "userChats")
@@ -39,6 +43,7 @@ public class User extends AuditingEntity<Long> {
     @JoinColumn(name = "company_id")
     private Company company;
 
+    @NotAudited
     @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<UserChat> userChats = new ArrayList<>();
