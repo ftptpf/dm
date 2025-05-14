@@ -7,6 +7,8 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.database.entity.User;
 import ru.ftptpf.dto.PersonalInfo;
@@ -14,6 +16,7 @@ import ru.ftptpf.dto.UserFilter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 public class FilterUserRepositoryImpl implements FilterUserRepository {
@@ -23,10 +26,20 @@ public class FilterUserRepositoryImpl implements FilterUserRepository {
             FROM users
             WHERE company_id = ? AND role = ?
             """;
-
+    private static final String UPDATE_COMPANY_AND_ROLE = """
+            UPDATE users
+            SET company_id = ?, role = ?
+            WHERE id = ?
+            """;
+    private static final String UPDATE_COMPANY_AND_ROLE_NAMED = """
+            UPDATE users
+            SET company_id = :companyId, role = :role
+            WHERE id = :id
+            """;
 
     private final EntityManager entityManager;
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public List<User> findAllByFilter(UserFilter filter) {
@@ -58,5 +71,24 @@ public class FilterUserRepositoryImpl implements FilterUserRepository {
                         rs.getString("lastname"),
                         rs.getDate("birth_date").toLocalDate()),
                 companyId, role.name());
+    }
+
+    @Override
+    public void updateCompanyAndRole(List<User> users) {
+        List<Object[]> args = users.stream()
+                .map(user -> new Object[]{user.getCompany().getId(), user.getRole().name(), user.getId()})
+                .toList();
+        jdbcTemplate.batchUpdate(UPDATE_COMPANY_AND_ROLE, args);
+    }
+
+    @Override
+    public void updateCompanyAndRoleNamed(List<User> users) {
+        MapSqlParameterSource[] args = users.stream().map(user -> Map.of(
+                        "companyId", user.getCompany().getId(),
+                        "role", user.getRole().name(),
+                        "id", user.getId()))
+                .map(MapSqlParameterSource::new)
+                .toArray(MapSqlParameterSource[]::new);
+        namedParameterJdbcTemplate.batchUpdate(UPDATE_COMPANY_AND_ROLE_NAMED, args);
     }
 }
