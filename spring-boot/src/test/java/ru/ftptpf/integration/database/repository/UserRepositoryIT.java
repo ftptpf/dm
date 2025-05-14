@@ -28,6 +28,12 @@ class UserRepositoryIT {
     private UserRepository userRepository;
 
     @Test
+    void checkJdbcTemplate() {
+        List<PersonalInfo> users = userRepository.findAllByCompanyIdAndRole(1, Role.USER);
+        Assertions.assertThat(users).hasSize(1);
+    }
+
+    @Test
     @Commit
     void checkAuditing() {
         User ivan = userRepository.getReferenceById(1L);
