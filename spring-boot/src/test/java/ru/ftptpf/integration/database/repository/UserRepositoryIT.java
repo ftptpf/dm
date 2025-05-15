@@ -8,6 +8,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.jdbc.Sql;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.database.entity.User;
 import ru.ftptpf.database.repository.UserRepository;
@@ -21,6 +22,9 @@ import java.util.List;
 import java.util.Optional;
 
 @IT
+@Sql({
+        "classpath:sql/data.sql"
+})
 @Rollback
 class UserRepositoryIT {
 
