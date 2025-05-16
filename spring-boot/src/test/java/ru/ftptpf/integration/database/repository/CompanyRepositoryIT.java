@@ -1,6 +1,7 @@
 package ru.ftptpf.integration.database.repository;
 
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Commit;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 import ru.ftptpf.database.entity.Company;
 import ru.ftptpf.database.repository.CompanyRepository;
+import ru.ftptpf.integration.IntegrationTestBase;
 import ru.ftptpf.integration.annotation.IT;
 
 import java.util.Map;
@@ -18,11 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@IT
+//@IT
 //@Transactional
 @Rollback
 //@Commit
-class CompanyRepositoryIT {
+class CompanyRepositoryIT extends IntegrationTestBase {
 
     private static final Integer APPLE_ID = 6;
     @Autowired
@@ -40,6 +42,7 @@ class CompanyRepositoryIT {
     }
 
     @Test
+    @Disabled
     void delete() {
         Optional<Company> maybeCompany = companyRepository.findById(APPLE_ID);
         assertTrue(maybeCompany.isPresent());

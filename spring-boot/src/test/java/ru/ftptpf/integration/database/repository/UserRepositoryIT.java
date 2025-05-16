@@ -15,18 +15,19 @@ import ru.ftptpf.database.repository.UserRepository;
 import ru.ftptpf.dto.PersonalInfo;
 import ru.ftptpf.dto.PersonalInfo2;
 import ru.ftptpf.dto.UserFilter;
+import ru.ftptpf.integration.IntegrationTestBase;
 import ru.ftptpf.integration.annotation.IT;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@IT
-@Sql({
-        "classpath:sql/data.sql"
-})
+//@IT
+//@Sql({
+//        "classpath:sql/data.sql"
+//})
 @Rollback
-class UserRepositoryIT {
+class UserRepositoryIT extends IntegrationTestBase {
 
     @Autowired
     private UserRepository userRepository;
@@ -45,7 +46,6 @@ class UserRepositoryIT {
     }
 
     @Test
-    @Commit
     void checkAuditing() {
         User ivan = userRepository.getReferenceById(1L);
         ivan.setBirthDate(ivan.getBirthDate().plusDays(1));
