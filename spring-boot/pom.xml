@@ -10,12 +10,13 @@
     </parent>
 
     <artifactId>spring-boot</artifactId>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.version>3.4.5</spring-boot.version>
+        <spring-boot.version>3.5.0</spring-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -88,7 +89,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.38</version>
-            <scope>provided</scope>
+<!--            <scope>provided</scope>-->
         </dependency>
     </dependencies>
 
@@ -97,7 +98,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.4.5</version>
+                <version>3.5.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

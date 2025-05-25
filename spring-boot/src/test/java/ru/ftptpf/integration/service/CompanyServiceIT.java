@@ -31,7 +31,7 @@ public class CompanyServiceIT {
     void findById() {
         Optional<CompanyReadDto> actualResult = companyService.findById(COMPANY_ID);
         Assertions.assertTrue(actualResult.isPresent());
-        CompanyReadDto expectedResult = new CompanyReadDto(COMPANY_ID);
+        CompanyReadDto expectedResult = new CompanyReadDto(COMPANY_ID, null);
 
         actualResult.ifPresent(actual -> Assertions.assertEquals(expectedResult, actual));
     }
