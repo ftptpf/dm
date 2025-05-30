@@ -1,18 +1,21 @@
 package ru.ftptpf.dto;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.ftptpf.database.entity.Role;
 
 import java.time.LocalDate;
 
-@Value
-public class UserReadDto {
-    Long id;
-    String username;
-    LocalDate birthDate;
-    String firstname;
-    String lastname;
-    Role role;
-    CompanyReadDto company;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public final class UserReadDto {
+    private Long id;
+    private String username;
+    private LocalDate birthDate;
+    private String firstname;
+    private String lastname;
+    private Role role;
+    private CompanyReadDto company;
 }
