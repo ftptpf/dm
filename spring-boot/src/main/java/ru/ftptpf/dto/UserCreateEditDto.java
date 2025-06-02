@@ -1,5 +1,8 @@
 package ru.ftptpf.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,14 +10,16 @@ import ru.ftptpf.database.entity.Role;
 
 import java.time.LocalDate;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldNameConstants
 public class UserCreateEditDto {
-    String username;
+    private String username;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    LocalDate birthDate;
-    String firstname;
-    String lastname;
-    Role role;
-    Integer companyId;
+    private LocalDate birthDate;
+    private String firstname;
+    private String lastname;
+    private Role role;
+    private Integer companyId;
 }

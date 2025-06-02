@@ -40,24 +40,25 @@ public class UserController {
     @PostMapping("/users")
 //    @ResponseStatus(HttpStatus.CREATED)
     public String create(@ModelAttribute("user") UserCreateEditDto user) {
-        return "redirect:/users/" + userService.create(user).getId();
+        return "redirect:/api/v1/users/" + userService.create(user).getId();
     }
 
     //    @PutMapping("{id}")
     @PostMapping("/users/{id}/update")
-    public String update(@PathVariable("id") Long id, @ModelAttribute("user") UserCreateEditDto user) {
+    public String update(@PathVariable("id") Long id, @ModelAttribute UserCreateEditDto user) {
         return userService.update(id, user)
-                .map(it -> "redirect:/users/{id}")
+                .map(it -> "redirect:/api/v1/users/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     //    @DeleteMapping("/{id}")
     @PostMapping("/users/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
-        if (!userService.delete(id)) {
+        if (userService.delete(id)) {
+            return "redirect:/api/v1/users";
+        } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return "redirect:/users";
     }
 
 }
