@@ -1,11 +1,13 @@
 package ru.ftptpf.http.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -13,6 +15,8 @@ import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.dto.UserCreateEditDto;
 import ru.ftptpf.service.CompanyService;
 import ru.ftptpf.service.UserService;
+import ru.ftptpf.validation.group.CreateAction;
+import ru.ftptpf.validation.group.UpdateAction;
 
 @Controller
 @RequestMapping("/api/v1")
@@ -50,7 +54,7 @@ public class UserController {
 
     @PostMapping("/users")
 //    @ResponseStatus(HttpStatus.CREATED)
-    public String create(@ModelAttribute("user") @Valid UserCreateEditDto user,
+    public String create(@ModelAttribute("user") @Validated({Default.class, CreateAction.class}) UserCreateEditDto user,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
@@ -63,7 +67,8 @@ public class UserController {
 
     //    @PutMapping("{id}")
     @PostMapping("/users/{id}/update")
-    public String update(@PathVariable("id") Long id, @ModelAttribute @Valid UserCreateEditDto user) {
+    public String update(@PathVariable("id") Long id,
+                         @ModelAttribute @Validated({Default.class, UpdateAction.class}) UserCreateEditDto user) {
         return userService.update(id, user)
                 .map(it -> "redirect:/api/v1/users/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
