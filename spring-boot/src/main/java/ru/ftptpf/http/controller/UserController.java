@@ -1,8 +1,8 @@
 package ru.ftptpf.http.controller;
 
-import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +18,7 @@ import ru.ftptpf.service.UserService;
 import ru.ftptpf.validation.group.CreateAction;
 import ru.ftptpf.validation.group.UpdateAction;
 
+@Slf4j
 @Controller
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
