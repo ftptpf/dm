@@ -1,10 +1,14 @@
 package ru.ftptpf.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.ftptpf.database.querydsl.QPredicates;
 import ru.ftptpf.database.repository.UserRepository;
 import ru.ftptpf.dto.UserCreateEditDto;
+import ru.ftptpf.dto.UserFilter;
 import ru.ftptpf.dto.UserReadDto;
 import ru.ftptpf.mapper.UserCreateEditMapper;
 import ru.ftptpf.mapper.UserReadMapper;
@@ -26,6 +30,19 @@ public class UserService {
         this.userReadMapper = userReadMapper;
         this.userCreateEditMapper = userCreateEditMapper;
     }
+
+/*
+    public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
+        var predicate = QPredicates.builder()
+                .add(filter.firstname(), QUser.user.firstname::containsIgnoreCase)
+                .add(filter.lastname(), user.lastname::containsIgnoreCase)
+                .add(filter.birthDate(), user.birthDate::before)
+                .build();
+
+        return userRepository.findAll(predicate, pageable)
+                .map(userReadMapper::map);
+    }
+*/
 
     public List<UserReadDto> findAll() {
         return userRepository.findAll().stream()
