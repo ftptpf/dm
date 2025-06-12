@@ -1,14 +1,12 @@
 package ru.ftptpf.service;
 
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.ftptpf.database.querydsl.QPredicates;
+import org.springframework.web.multipart.MultipartFile;
 import ru.ftptpf.database.repository.UserRepository;
 import ru.ftptpf.dto.UserCreateEditDto;
-import ru.ftptpf.dto.UserFilter;
 import ru.ftptpf.dto.UserReadDto;
 import ru.ftptpf.mapper.UserCreateEditMapper;
 import ru.ftptpf.mapper.UserReadMapper;
@@ -23,26 +21,15 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
+    private final ImageService imageService;
 
     public UserService(@Qualifier("userRepository") UserRepository userRepository,
-                       UserReadMapper userReadMapper, UserCreateEditMapper userCreateEditMapper) {
+                       UserReadMapper userReadMapper, UserCreateEditMapper userCreateEditMapper, ImageService imageService) {
         this.userRepository = userRepository;
         this.userReadMapper = userReadMapper;
         this.userCreateEditMapper = userCreateEditMapper;
+        this.imageService = imageService;
     }
-
-/*
-    public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
-        var predicate = QPredicates.builder()
-                .add(filter.firstname(), QUser.user.firstname::containsIgnoreCase)
-                .add(filter.lastname(), user.lastname::containsIgnoreCase)
-                .add(filter.birthDate(), user.birthDate::before)
-                .build();
-
-        return userRepository.findAll(predicate, pageable)
-                .map(userReadMapper::map);
-    }
-*/
 
     public List<UserReadDto> findAll() {
         return userRepository.findAll().stream()
@@ -58,7 +45,10 @@ public class UserService {
     @Transactional
     public UserReadDto create(UserCreateEditDto userDto) {
         return Optional.of(userDto)
-                .map(userCreateEditMapper::map)
+                .map(dto -> {
+                    uploadImage(dto.getImage());
+                    return userCreateEditMapper.map(dto);
+                })
                 .map(userRepository::save)
                 .map(userReadMapper::map)
                 .orElseThrow();
@@ -67,7 +57,10 @@ public class UserService {
     @Transactional
     public Optional<UserReadDto> update(Long id, UserCreateEditDto userDto) {
         return userRepository.findById(id)
-                .map(entity -> userCreateEditMapper.map(userDto, entity))
+                .map(entity -> {
+                    uploadImage(userDto.getImage());
+                    return userCreateEditMapper.map(userDto, entity);
+                })
                 .map(userRepository::saveAndFlush)
                 .map(userReadMapper::map);
     }
@@ -81,6 +74,13 @@ public class UserService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    @SneakyThrows
+    private void uploadImage(MultipartFile image) {
+        if (!image.isEmpty()) {
+            imageService.upload(image.getOriginalFilename(), image.getInputStream());
+        }
     }
 
 }
