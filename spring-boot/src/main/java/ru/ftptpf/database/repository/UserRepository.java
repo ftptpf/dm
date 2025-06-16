@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.history.RevisionRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.database.entity.User;
 import ru.ftptpf.dto.PersonalInfo2;
@@ -48,4 +49,7 @@ public interface UserRepository extends
     @Query(value = "SELECT firstname, lastname, birth_date birthDate FROM users u WHERE u.company_id = :companyId",
             nativeQuery = true)
     List<PersonalInfo2> findAllByCompanyId(@Param("companyId") Integer companyId);
+
+    Optional<User> findByUsername(String username);
+
 }
