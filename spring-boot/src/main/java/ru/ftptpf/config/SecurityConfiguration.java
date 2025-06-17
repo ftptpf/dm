@@ -17,7 +17,10 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .anyRequest()
                         .authenticated())
-/*                .httpBasic(Customizer.withDefaults());*/
+                .logout(logout -> logout
+                        .logoutUrl("/api/v1/logout")
+                        .logoutSuccessUrl("/api/v1/login")
+                        .deleteCookies("JSESSIONID"))
                 .formLogin(formLogin -> formLogin
                         .loginPage("/api/v1/login")
                         .defaultSuccessUrl("/api/v1/users")
