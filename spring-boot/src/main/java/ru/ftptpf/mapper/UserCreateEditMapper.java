@@ -1,7 +1,9 @@
 package ru.ftptpf.mapper;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import ru.ftptpf.database.entity.Company;
 import ru.ftptpf.database.entity.User;
@@ -16,6 +18,7 @@ import java.util.function.Predicate;
 public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
 
     private final CompanyRepository companyRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User map(UserCreateEditDto fromObject, User toObject) {
@@ -37,6 +40,11 @@ public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
         user.setBirthDate(object.getBirthDate());
         user.setRole(object.getRole());
         user.setCompany(getCompany(object.getCompanyId()));
+
+        Optional.ofNullable(object.getRowPassword())
+                .filter(StringUtils::hasText)
+                .map(passwordEncoder::encode)
+                .ifPresent(user::setPassword);
 
         Optional.ofNullable(object.getImage())
                 .filter(Predicate.not(MultipartFile::isEmpty))

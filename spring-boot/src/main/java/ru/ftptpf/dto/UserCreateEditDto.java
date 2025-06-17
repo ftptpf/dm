@@ -1,6 +1,7 @@
 package ru.ftptpf.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,9 @@ import java.time.LocalDate;
 public class UserCreateEditDto {
     @Email
     private String username;
+
+    @NotBlank(groups = {CreateAction.class})
+    private String rowPassword;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
