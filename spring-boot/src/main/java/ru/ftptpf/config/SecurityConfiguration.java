@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
+import ru.ftptpf.database.entity.Role;
 
 @Configuration
 public class SecurityConfiguration {
@@ -15,6 +17,9 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+                        .requestMatchers("/api/v1/login", "/api/v1/users/registration", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers(RegexRequestMatcher.regexMatcher("/api/v1/users/[1-9]/delete")).hasAuthority(Role.ADMIN.getAuthority())
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated())
                 .logout(logout -> logout
@@ -23,8 +28,7 @@ public class SecurityConfiguration {
                         .deleteCookies("JSESSIONID"))
                 .formLogin(formLogin -> formLogin
                         .loginPage("/api/v1/login")
-                        .defaultSuccessUrl("/api/v1/users")
-                        .permitAll());
+                        .defaultSuccessUrl("/api/v1/users"));
         return http.build();
     }
 
