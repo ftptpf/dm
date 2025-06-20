@@ -2,6 +2,7 @@ package ru.ftptpf.service;
 
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,6 +38,7 @@ public class UserService implements UserDetailsService {
         this.imageService = imageService;
     }
 
+//    @PostFilter("filterObject.role.name().equals('ADMIN')")
     public List<UserReadDto> findAll() {
         return userRepository.findAll().stream()
                 .map(userReadMapper::map)
