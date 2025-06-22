@@ -6,7 +6,10 @@
 </head>
 <body>
 <div th:fragment="header">
-    <span th:text="${#authentication.principal.username}">Username</span>
+<!--    <div th:if="${#authentication.isAuthenticated()}">
+        <span th:text="${#authentication.getPrincipal().username}">Username</span>
+    </div>-->
+    <div th:text="${#authentication.isAuthenticated()}">
     <form action="/api/v1/login" method="post">
         <button type="submit">Logout</button>
     </form>
