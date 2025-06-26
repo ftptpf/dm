@@ -9,7 +9,7 @@
     <div th:if="${#authentication.isAuthenticated()}">
         <span th:text="${#authentication.getPrincipal().username}">Username</span>
     </div>
-    <form action="/api/v1/login" method="post">
+    <form th:action="@{/api/v1/login}" method="post">
         <button type="submit">Logout</button>
     </form>
 </div>
