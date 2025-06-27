@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import ru.ftptpf.database.entity.Role;
 import ru.ftptpf.dto.UserCreateEditDto;
 import ru.ftptpf.dto.UserReadDto;
@@ -41,11 +42,13 @@ public class UserServiceIT extends IntegrationTestBase {
     void create() {
         UserCreateEditDto userDto = new UserCreateEditDto(
                 "test@gmail.com",
+                "123456",
                 LocalDate.now(),
                 "Test",
                 "Test",
                 Role.USER,
-                COMPANY_1
+                COMPANY_1,
+                new MockMultipartFile("image", new byte[0])
         );
         UserReadDto actualResult = userService.create(userDto);
         Assertions.assertThat(actualResult.getUsername()).isEqualTo(userDto.getUsername());
@@ -57,11 +60,13 @@ public class UserServiceIT extends IntegrationTestBase {
     void update() {
         UserCreateEditDto userDto = new UserCreateEditDto(
                 "test@gmail.com",
+                "123456",
                 LocalDate.now(),
                 "Test",
                 "Test",
                 Role.USER,
-                COMPANY_1
+                COMPANY_1,
+                new MockMultipartFile("image", new byte[0])
         );
         Optional<UserReadDto> actualResult = userService.update(USER_1, userDto);
         Assertions.assertThat(actualResult).isPresent();
