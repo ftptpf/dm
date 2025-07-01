@@ -2,6 +2,7 @@ package ru.ftptpf.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -29,6 +30,9 @@ public class SecurityConfiguration {
                         .logoutSuccessUrl("/api/v1/login")
                         .deleteCookies("JSESSIONID"))
                 .formLogin(formLogin -> formLogin
+                        .loginPage("/api/v1/login")
+                        .defaultSuccessUrl("/api/v1/users"))
+                .oauth2Login(config -> config
                         .loginPage("/api/v1/login")
                         .defaultSuccessUrl("/api/v1/users"));
         return http.build();
