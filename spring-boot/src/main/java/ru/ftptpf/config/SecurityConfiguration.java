@@ -47,11 +47,11 @@ public class SecurityConfiguration {
                         .deleteCookies("JSESSIONID"))
                 .formLogin(formLogin -> formLogin
                         .loginPage("/api/v1/login")
-                        .defaultSuccessUrl("/api/v1/users"))
-                .oauth2Login(config -> config
+                        .defaultSuccessUrl("/api/v1/users")
+/*                .oauth2Login(config -> config
                         .loginPage("/api/v1/login")
                         .defaultSuccessUrl("/api/v1/users")
-                        .userInfoEndpoint(userINfo -> userINfo.oidcUserService(oidcUserService()))
+                        .userInfoEndpoint(userINfo -> userINfo.oidcUserService(oidcUserService()))*/
                 );
         return http.build();
     }
