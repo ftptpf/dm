@@ -1,12 +1,17 @@
 package ru.ftptpf.aop;
 
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class FirstAspect {
+
+    private static final Logger log = LoggerFactory.getLogger(FirstAspect.class);
 
     /**
      * @within - check annotation on the class level
@@ -69,6 +74,13 @@ public class FirstAspect {
     @Pointcut("execution(public * ru.ftptpf.service.*Service.findById(*))")
     public void anyFindByIdServiceMethod() {
     }
+
+    @Before("anyFindByIdServiceMethod()")
+    public void addLogging() {
+        log.info("invoked findById() method");
+    }
+
+
 
 
 }
