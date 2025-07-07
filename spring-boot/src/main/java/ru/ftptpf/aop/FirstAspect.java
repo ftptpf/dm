@@ -1,5 +1,6 @@
 package ru.ftptpf.aop;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -75,8 +76,8 @@ public class FirstAspect {
     public void anyFindByIdServiceMethod() {
     }
 
-    @Before("anyFindByIdServiceMethod()")
-    public void addLogging() {
+    @Before("anyFindByIdServiceMethod() && args(id)")
+    public void addLogging(JoinPoint joinPoint, Object id) {
         log.info("invoked findById() method");
     }
 
